@@ -1,0 +1,59 @@
+name: Continuous Integration
+
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+    branches:
+      - master
+
+jobs:
+  static-tests:
+    name: Validate Format
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+
+      - name: Validate Manifest
+        run: composer validate
+
+      - name: Validate XML format
+        run: sudo apt-get install libxml2-utils -y && find . -type f -name '*.xml' -exec xmllint --noout {} +
+
+  tests:
+    name: Tests
+    needs: static-tests
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - PHP_VERSION: php83-fpm
+            MAGENTO_VERSION: 2.4.7-p3
+          - PHP_VERSION: php82-fpm
+            MAGENTO_VERSION: 2.4.6-p8
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+
+      - name: Start Docker
+        run: docker run --detach --name magento-project-community-edition michielgerritsen/magento-project-community-edition:${{ matrix.PHP_VERSION }}-magento${{ matrix.MAGENTO_VERSION }}
+
+      - name: Upload our code into the docker container
+        run: docker cp $(pwd) magento-project-community-edition:/data/extensions/
+
+      - name: Install the extension in Magento
+        run: docker exec magento-project-community-edition composer require samjuk/m2-module-cache-debounce:@dev
+
+      - name: Run PHPStan
+        run: docker exec magento-project-community-edition bash -c "vendor/bin/phpstan analyse -c extensions/${{ github.event.repository.name }}/phpstan.neon extensions/${{ github.event.repository.name }}"
+
+      - name: Run PHPCS
+        run: docker exec magento-project-community-edition bash -c "vendor/bin/phpcs --standard=Magento2 --extensions=php,phtml -p extensions/${{ github.event.repository.name }} --severity=6 --exclude=Squiz.WhiteSpace.ScopeClosingBrace"
+
+      # - name: Run Unit Tests
+      #   run: docker exec magento-project-community-edition bash -c "vendor/bin/phpunit extensions/${{ github.event.repository.name }}/Test/Unit"
+
+      - name: Code Compilation Test
+        run: docker exec magento-project-community-edition bash -c "php bin/magento setup:di:compile"
+

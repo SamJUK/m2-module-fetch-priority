@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_PageBuilder:etc/content_type.xsd">
+    <type name="image">
+        <appearances>
+            <appearance name="full-width">
+                <elements>
+                    <element name="desktop_image">
+                        <attribute name="image_loading" source="loading"/>
+                        <attribute name="image_fetch_priority" source="fetchPriority"/>
+                    </element>
+                    <element name="mobile_image">
+                        <attribute name="image_loading" source="loading"/>
+                        <attribute name="image_fetch_priority" source="fetchPriority"/>
+                    </element>
+                </elements>
+            </appearance>
+        </appearances>
+    </type>
+</config>

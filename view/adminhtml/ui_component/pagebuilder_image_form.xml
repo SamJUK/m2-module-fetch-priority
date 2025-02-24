@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<form xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Ui:etc/ui_configuration.xsd">
+    <fieldset name="general">
+        <field name="image_loading" sortOrder="40" formElement="checkbox">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="default" xsi:type="string">lazy</item>
+                </item>
+            </argument>
+            <settings>
+                <dataType>boolean</dataType>
+                <label translate="true">Lazy Load</label>
+                <dataScope>image_loading</dataScope>
+            </settings>
+            <formElements>
+                <checkbox>
+                    <settings>
+                        <valueMap>
+                            <map name="false" xsi:type="string">eager</map>
+                            <map name="true" xsi:type="string">lazy</map>
+                        </valueMap>
+                        <prefer>toggle</prefer>
+                    </settings>
+                </checkbox>
+            </formElements>
+        </field>
+        <field name="image_fetch_priority" sortOrder="50" formElement="select" component="Magento_PageBuilder/js/form/element/visual-select">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="default" xsi:type="string">auto</item>
+                </item>
+            </argument>
+            <settings>
+                <dataType>text</dataType>
+                <label translate="true">Image Fetch Priority</label>
+                <notice translate="true">Leave this as 'auto' or 'low' if using Lazy Loading.</notice>
+                <dataScope>image_fetch_priority</dataScope>
+            </settings>
+            <formElements>
+                <select>
+                    <settings>
+                         <options>
+                            <option name="0" xsi:type="array">
+                                <item name="value" xsi:type="string">auto</item>
+                                <item name="label" xsi:type="string" translate="true">Auto</item>
+                            </option>
+                            <option name="1" xsi:type="array">
+                                <item name="value" xsi:type="string">low</item>
+                                <item name="label" xsi:type="string" translate="true">Low</item>
+                            </option>
+                            <option name="2" xsi:type="array">
+                                <item name="value" xsi:type="string">medium</item>
+                                <item name="label" xsi:type="string" translate="true">Medium</item>
+                            </option>
+                            <option name="3" xsi:type="array">
+                                <item name="value" xsi:type="string">high</item>
+                                <item name="label" xsi:type="string" translate="true">High</item>
+                            </option>
+                        </options>
+                    </settings>
+                </select>
+            </formElements>
+        </field>
+    </fieldset>
+</form>

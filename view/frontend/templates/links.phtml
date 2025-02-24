@@ -1,0 +1,17 @@
+<!-- SamJUK_FetchPriority::links.phtml -->
+<?php
+/**
+ * @var \Magento\Framework\View\Element\Template $block
+ * @var \SamJUK\FetchPriority\ViewModel\Links $viewModel
+ * @var \Magento\Framework\View\Helper\SecureHtmlRenderer $secureRenderer
+ */
+$viewModel = $block->getViewModel();
+foreach ($viewModel->getLinks() as $link) {
+    // phpcs:ignore
+    echo /* @noEscape */ $secureRenderer->renderTag(
+        'link',
+        $link->getAttrs()
+    );
+}
+?>
+<!-- /SamJUK_FetchPriority::links.phtml -->
