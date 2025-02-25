@@ -10,8 +10,8 @@ class Preload implements \SamJUK\FetchPriority\Api\LinkInterface
 
     public function __construct(
         private readonly string $href,
-        private readonly string $as,
-        private readonly string $type,
+        private readonly \SamJUK\FetchPriority\Enum\Preload\AsType $asType,
+        private readonly \SamJUK\FetchPriority\Enum\Preload\MimeType $mimeType,
         private readonly ?\SamJUK\FetchPriority\Enum\FetchPriority $fetchPriority = null,
         private readonly bool $crossOrigin = false,
         private readonly ?string $media = null,
@@ -25,8 +25,8 @@ class Preload implements \SamJUK\FetchPriority\Api\LinkInterface
         $attrs = [
             'rel' => static::REL,
             'href' => $this->href,
-            'as' => $this->as,
-            'type' => $this->type
+            'as' => $this->asType->value,
+            'type' => $this->mimeType->value
         ];
 
         if ($this->fetchPriority) {

@@ -12,8 +12,8 @@ class Links implements \Magento\Framework\View\Element\Block\ArgumentInterface
     ) {
         $preload = $this->preloadFactory->create([
             'href' => 'https://app.magento2.test/media/my_custom_entity/image1.jpg',
-            'as' => 'image/jpg',
-            'type' => 'image',
+            'mimeType' => \SamJUK\FetchPriority\Enum\Preload\MimeType::ImageJPEG,
+            'asType' => \SamJUK\FetchPriority\Enum\Preload\AsType::Image,
             'fetchPriority' => \SamJUK\FetchPriority\Enum\FetchPriority::High
         ]);
         $this->linkStore->add($preload);
