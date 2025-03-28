@@ -10,8 +10,7 @@ It also provides a simple API to add preload & prefetch link tags to the header 
 
 ## Installation
 ```sh
-composer config repositories.samjuk-m2-module-fetch-priority vcs git@github.com:SamJUK/m2-module-fetch-priority.git
-composer require samjuk/m2-module-fetch-priority:@dev
+composer require samjuk/m2-module-fetch-priority
 php bin/magento setup:upgrade && php bin/magento cache:flush
 ```
 
@@ -25,7 +24,7 @@ class MyClassToAddPreloads
 {
      public function __construct(
           private readonly \SamJUK\FetchPriority\Model\LinkStore $linkStore,
-          private readonly \SamJUK\FetchPriority\Model\LinksPreloadFactory $preloadFactory
+          private readonly \SamJUK\FetchPriority\Model\Links\PreloadFactory $preloadFactory
      ) { }
 
      public function execute()
@@ -33,8 +32,8 @@ class MyClassToAddPreloads
           // Do Stuff
           $preload = $this->preloadFactory->create([
                'href' => 'https://app.magento2.test/media/my_custom_entity/image1.jpg',
-               'mimeType' => \SamJUK\FetchPriority\Enum\FetchPriority\Preload\MimeType::ImageJPEG,
-               'asType' => \SamJUK\FetchPriority\Enum\FetchPriority\Preload\AsType::Image,
+               'mimeType' => \SamJUK\FetchPriority\Enum\Preload\MimeType::ImageJPEG,
+               'asType' => \SamJUK\FetchPriority\Enum\Preload\AsType::Image,
                'fetchPriority' => \SamJUK\FetchPriority\Enum\FetchPriority::High
           ]);
           $this->linkStore->add($preload);
@@ -49,7 +48,7 @@ class MyClassToAddPrefetches
 {
      public function __construct(
           private readonly \SamJUK\FetchPriority\Model\LinkStore $linkStore,
-          private readonly \SamJUK\FetchPriority\Model\LinksPrefetchFactory $preloadFactory
+          private readonly \SamJUK\FetchPriority\Model\Links\PrefetchFactory $preloadFactory
      ) { }
 
      public function execute()
