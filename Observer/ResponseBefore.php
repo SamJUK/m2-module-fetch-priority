@@ -22,7 +22,8 @@ class ResponseBefore implements ObserverInterface
             <!-- SamJUK_FetchPriority:preload -->
             {$this->getPreloadsHTML()}
             <!-- / SamJUK_FetchPriority::preload -->",
-            $response->getBody()
+            $response->getBody(),
+            1
         ));
     }
 
