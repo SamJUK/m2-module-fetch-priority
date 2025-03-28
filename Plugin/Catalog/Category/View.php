@@ -20,8 +20,7 @@ class View
         private readonly ParamsBuilder $imageParamsBuilder,
         private readonly PlaceholderFactory $viewAssetPlaceholderFactory,
         private readonly AssetImageFactory $viewAssetImageFactory
-   ) { }
-
+    ) { }
 
     public function afterExecute($subject, $result)
     {
@@ -34,8 +33,10 @@ class View
         $i = 0;
         $imageType = $this->getImageType();
         $collection = $this->listProductBlock->getLoadedProductCollection();
-        foreach($collection as $product) {
-            if (++$i > 4) { return; }
+        foreach ($collection as $product) {
+            if (++$i > 4) {
+                return;
+            }
             $image = $this->getProductImage($product, $imageType);
             $this->preload($image);
         }
@@ -84,8 +85,7 @@ class View
             'mimeType' => \SamJUK\FetchPriority\Enum\Preload\MimeType::ImageJPEG,
             'asType' => \SamJUK\FetchPriority\Enum\Preload\AsType::Image,
             'fetchPriority' => \SamJUK\FetchPriority\Enum\FetchPriority::High
-       ]);
-       $this->linkStore->add($preload);
+        ]);
+        $this->linkStore->add($preload);
     }
-
 }

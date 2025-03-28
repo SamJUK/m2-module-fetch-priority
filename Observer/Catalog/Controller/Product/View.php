@@ -13,7 +13,7 @@ class View implements ObserverInterface
         private readonly \SamJUK\FetchPriority\Model\LinkStore $linkStore,
         private readonly \SamJUK\FetchPriority\Model\Links\PreloadFactory $preloadFactory,
         private readonly \Magento\Catalog\Block\Product\View\Gallery $galleryBlock
-   ) { }
+    ) { }
 
     public function execute(Observer $observer)
     {
@@ -22,8 +22,8 @@ class View implements ObserverInterface
             'mimeType' => \SamJUK\FetchPriority\Enum\Preload\MimeType::ImageJPEG,
             'asType' => \SamJUK\FetchPriority\Enum\Preload\AsType::Image,
             'fetchPriority' => \SamJUK\FetchPriority\Enum\FetchPriority::High
-       ]);
-       $this->linkStore->add($preload);
+        ]);
+        $this->linkStore->add($preload);
     }
 
     private function getMainImage($product)
