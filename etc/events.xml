@@ -2,4 +2,8 @@
     <event name="catalog_controller_product_view">
         <observer name="samjuk_fetchpriority_catalog_controller_product_view" instance="SamJUK\FetchPriority\Observer\Catalog\Controller\Product\View"/>
     </event>
+
+    <event name="controller_front_send_response_before">
+        <observer name="samjuk_fetchpriority_controller_front_send_response_before" instance="SamJUK\FetchPriority\Observer\ResponseBefore"/>
+    </event>
 </config>
