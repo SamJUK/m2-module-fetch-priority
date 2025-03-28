@@ -8,10 +8,12 @@
                     <element name="desktop_image">
                         <attribute name="image_loading" source="loading"/>
                         <attribute name="image_fetch_priority" source="fetchPriority"/>
+                        <attribute name="image_preload" source="imagePreload"/>
                     </element>
                     <element name="mobile_image">
                         <attribute name="image_loading" source="loading"/>
                         <attribute name="image_fetch_priority" source="fetchPriority"/>
+                        <attribute name="image_preload" source="imagePreload"/>
                     </element>
                 </elements>
             </appearance>
