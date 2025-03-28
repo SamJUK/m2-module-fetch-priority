@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Store:etc/config.xsd">
+    <default>
+        <samjuk_fetch_priority>
+            <general>
+                <enabled>1</enabled>
+            </general>
+            <preloads>
+                <product_main>1</product_main>
+                <category_grid>1</category_grid>
+                <pagebuilder_content>1</pagebuilder_content>
+            </preloads>
+        </samjuk_fetch_priority>
+    </default>
+</config>

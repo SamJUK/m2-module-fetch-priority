@@ -12,11 +12,16 @@ class View implements ObserverInterface
     public function __construct(
         private readonly \SamJUK\FetchPriority\Model\LinkStore $linkStore,
         private readonly \SamJUK\FetchPriority\Model\Links\PreloadFactory $preloadFactory,
-        private readonly \Magento\Catalog\Block\Product\View\Gallery $galleryBlock
+        private readonly \Magento\Catalog\Block\Product\View\Gallery $galleryBlock,
+        private readonly \SamJUK\FetchPriority\Model\Config $config
     ) { }
 
     public function execute(Observer $observer)
     {
+        if (!$this->config->isEnabled() || $this->config->isProductMainPreloadEnabled()) {
+            return;
+        }
+
         $preload = $this->preloadFactory->create([
             'href' => $this->getMainImage($observer->getData('product')),
             'mimeType' => \SamJUK\FetchPriority\Enum\Preload\MimeType::ImageJPEG,

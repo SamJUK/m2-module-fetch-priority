@@ -19,11 +19,16 @@ class View
         private readonly ConfigInterface $presentationConfig,
         private readonly ParamsBuilder $imageParamsBuilder,
         private readonly PlaceholderFactory $viewAssetPlaceholderFactory,
-        private readonly AssetImageFactory $viewAssetImageFactory
+        private readonly AssetImageFactory $viewAssetImageFactory,
+        private readonly \SamJUK\FetchPriority\Model\Config $config
     ) { }
 
     public function afterExecute($subject, $result)
     {
+        if (!$this->config->isEnabled() || !$this->config->isCategoryProductPreloadEnabled()) {
+            return $result;
+        }
+
         $this->preloadInitialProductImages();
         return $result;
     }
