@@ -18,7 +18,7 @@ class View implements ObserverInterface
 
     public function execute(Observer $observer)
     {
-        if (!$this->config->isEnabled() || $this->config->isProductMainPreloadEnabled()) {
+        if (!$this->config->isEnabled() || !$this->config->isProductMainPreloadEnabled()) {
             return;
         }
 
