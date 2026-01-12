@@ -28,9 +28,11 @@ class ViewTest extends TestCase
 
     protected function setUp(): void
     {
+        // phpcs:disable
         if (!class_exists(PreloadFactory::class)) {
             eval('namespace SamJUK\FetchPriority\Model\Links; class PreloadFactory { public function create() { return null; } }');
         }
+        // phpcs:enable
 
         $this->preloadFactoryMock = $this->getMockBuilder(PreloadFactory::class)
             ->disableOriginalConstructor()

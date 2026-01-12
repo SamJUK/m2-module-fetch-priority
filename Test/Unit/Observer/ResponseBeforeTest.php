@@ -18,7 +18,9 @@ use SamJUK\FetchPriority\Observer\ResponseBefore;
 
 class ResponseBeforeTest extends TestCase
 {
+    // phpcs:ignore Generic.Files.LineLength.TooLong
     private const SAMPLE_RESPONSE_HTML = '<html><head><title>Test</title></head><body><h1>HELLO WORLD</h1></body></html>';
+    // phpcs:ignore Generic.Files.LineLength.TooLong
     private const SAMPLE_RESPONSE_HTML_MULTIPLE_HEADS = '<html><head><title>Test</title></head><body><div>header</div><head><meta charset="UTF-8"></head></body></html>';
 
     private ResponseBefore $subject;
