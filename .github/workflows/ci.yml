@@ -20,7 +20,7 @@ jobs:
 
   unit-tests-ghas:
     name: Unit Tests (GHAS)
-    uses: samjuk/gha-test-actions/.github/workflows/magento2-test-unit-module-ghas.yaml@master
+    uses: samjuk/github-actions/.github/workflows/magento2-test-unit-module-ghas.yaml@master
     needs: static
     with:
       magento_version: ${{ matrix.magento_version }}
