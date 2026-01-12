@@ -16,7 +16,7 @@ class ResponseBefore implements ObserverInterface
 
     public function execute(\Magento\Framework\Event\Observer $observer)
     {
-        if (!$this->isFrontendArea() || count($this->linkStore->get()) === 0) {
+        if (!$this->isFrontendArea() || empty($this->linkStore->get())) {
             return;
         }
 
