@@ -2,20 +2,20 @@
 
 declare(strict_types=1);
 
-namespace SamJUK\FetchPriority\Plugin\Catalog\Category;
+namespace SamJUK\FetchPriority\Plugin\Catalog\Block\Product\ProductList;
 
+use Magento\Catalog\Block\Product\ProductList\Toolbar;
 use Magento\Catalog\Model\View\Asset\ImageFactory as AssetImageFactory;
 use Magento\Catalog\Model\Product\Image\ParamsBuilder;
 use Magento\Catalog\Model\View\Asset\PlaceholderFactory;
 use Magento\Framework\View\ConfigInterface;
 use Magento\Catalog\Helper\Image as ImageHelper;
 
-class View
+class SetCollection
 {
     public function __construct(
         private readonly \SamJUK\FetchPriority\Model\LinkStore $linkStore,
         private readonly \SamJUK\FetchPriority\Model\Links\PreloadFactory $preloadFactory,
-        private readonly \Magento\Catalog\Block\Product\ListProduct $listProductBlock,
         private readonly ConfigInterface $presentationConfig,
         private readonly ParamsBuilder $imageParamsBuilder,
         private readonly PlaceholderFactory $viewAssetPlaceholderFactory,
@@ -23,21 +23,20 @@ class View
         private readonly \SamJUK\FetchPriority\Model\Config $config
     ) { }
 
-    public function afterExecute($subject, $result)
+    public function afterSetCollection(Toolbar $subject, $result, $collection)
     {
         if (!$this->config->isEnabled() || !$this->config->isCategoryProductPreloadEnabled()) {
             return $result;
         }
 
-        $this->preloadInitialProductImages();
+        $this->preloadInitialProductImages($collection, $subject->getCurrentMode());
         return $result;
     }
 
-    public function preloadInitialProductImages()
+    private function preloadInitialProductImages($collection, string $mode): void
     {
         $i = 0;
-        $imageType = $this->getImageType();
-        $collection = $this->listProductBlock->getLoadedProductCollection();
+        $imageType = $this->getImageType($mode);
         foreach ($collection as $product) {
             if (++$i > 4) {
                 return;
@@ -76,11 +75,9 @@ class View
         return $imageAsset->getUrl();
     }
 
-    private function getImageType()
+    private function getImageType(string $mode)
     {
-        return $this->listProductBlock->getMode() === 'grid'
-            ? 'category_page_grid'
-            : 'category_page_list';
+        return $mode === 'grid' ? 'category_page_grid' : 'category_page_list';
     }
 
     private function preload(string $imageUrl)
