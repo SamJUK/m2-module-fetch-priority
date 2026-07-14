@@ -13,7 +13,8 @@ class View implements ObserverInterface
         private readonly \SamJUK\FetchPriority\Model\LinkStore $linkStore,
         private readonly \SamJUK\FetchPriority\Model\Links\PreloadFactory $preloadFactory,
         private readonly \Magento\Catalog\Block\Product\View\Gallery $galleryBlock,
-        private readonly \SamJUK\FetchPriority\Model\Config $config
+        private readonly \SamJUK\FetchPriority\Model\Config $config,
+        private readonly \Magento\Catalog\Helper\Image $imageHelper
     ) { }
 
     public function execute(Observer $observer)
@@ -45,6 +46,6 @@ class View implements ObserverInterface
 
         return $mainImage
             ? $mainImage->getData('medium_image_url')
-            : $this->galleryBlock->getData('imageHelper')->getDefaultPlaceholderUrl('image');
+            : $this->imageHelper->getDefaultPlaceholderUrl('image');
     }
 }

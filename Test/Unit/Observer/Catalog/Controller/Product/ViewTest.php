@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace SamJUK\FetchPriority\Test\Unit\Observer\Catalog\Controller\Product;
 
 use Magento\Catalog\Block\Product\View\Gallery;
+use Magento\Catalog\Helper\Image;
 use Magento\Catalog\Model\Product;
 use Magento\Framework\Data\Collection;
 use Magento\Framework\DataObject;
@@ -25,6 +26,7 @@ class ViewTest extends TestCase
     private Gallery|MockObject $galleryBlockMock;
     private Config|MockObject $configMock;
     private Observer|MockObject $observerMock;
+    private Image|MockObject $imageHelperMock;
 
     protected function setUp(): void
     {
@@ -43,12 +45,14 @@ class ViewTest extends TestCase
         $this->galleryBlockMock = $this->createMock(Gallery::class);
         $this->configMock = $this->createMock(Config::class);
         $this->observerMock = $this->createMock(Observer::class);
+        $this->imageHelperMock = $this->createMock(Image::class);
 
         $this->subject = new View(
             $this->linkStoreMock,
             $this->preloadFactoryMock,
             $this->galleryBlockMock,
-            $this->configMock
+            $this->configMock,
+            $this->imageHelperMock
         );
     }
 
@@ -130,6 +134,41 @@ class ViewTest extends TestCase
             ->method('create')
             ->with($this->callback(function ($args) {
                 return $args['href'] === 'https://example.com/media/first-image.jpg';
+            }))
+            ->willReturn($preloadMock);
+
+        $this->linkStoreMock->expects($this->once())->method('add');
+
+        $this->subject->execute($this->observerMock);
+    }
+
+    public function testUsesPlaceholderWhenGalleryHasNoImages(): void
+    {
+        $this->configMock->method('isEnabled')->willReturn(true);
+        $this->configMock->method('isProductMainPreloadEnabled')->willReturn(true);
+
+        $productMock = $this->createMock(Product::class);
+        $productMock->method('getImage')->willReturn('product-image.jpg');
+
+        $this->observerMock->method('getData')
+            ->with('product')
+            ->willReturn($productMock);
+
+        $collectionMock = $this->createMock(Collection::class);
+        $collectionMock->method('getItems')->willReturn([]);
+
+        $this->galleryBlockMock->method('getGalleryImages')->willReturn($collectionMock);
+
+        $this->imageHelperMock->expects($this->once())
+            ->method('getDefaultPlaceholderUrl')
+            ->with('image')
+            ->willReturn('https://example.com/media/placeholder.jpg');
+
+        $preloadMock = $this->createMock(Preload::class);
+        $this->preloadFactoryMock->expects($this->once())
+            ->method('create')
+            ->with($this->callback(function ($args) {
+                return $args['href'] === 'https://example.com/media/placeholder.jpg';
             }))
             ->willReturn($preloadMock);
 
