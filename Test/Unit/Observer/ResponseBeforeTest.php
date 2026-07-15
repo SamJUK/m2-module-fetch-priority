@@ -159,6 +159,33 @@ class ResponseBeforeTest extends TestCase
     }
 
     /**
+     * Test that hrefs containing "$" + digits (e.g. "/img$1.jpg") are not corrupted.
+     * preg_replace() treats $0-$99 in its replacement argument as backreferences
+     * regardless of source; preg_replace_callback() does not have this problem.
+     */
+    public function testDoesNotCorruptHrefsContainingDollarDigitSequences(): void
+    {
+        $linkMock = $this->createMock(LinkInterface::class);
+        $linkMock->method('getAttrs')->willReturn(['rel' => 'preload', 'href' => '/img$1.jpg']);
+
+        $this->appStateMock->method('getAreaCode')->willReturn(Area::AREA_FRONTEND);
+        $this->linkStoreMock->method('get')->willReturn([$linkMock]);
+
+        $this->secureHtmlRendererMock->method('renderTag')
+            ->willReturn('<link rel="preload" href="/img$1.jpg">');
+
+        $this->responseMock->method('getBody')->willReturn(self::SAMPLE_RESPONSE_HTML);
+
+        $this->responseMock->expects($this->once())
+            ->method('setBody')
+            ->with($this->callback(function ($body) {
+                return str_contains($body, '/img$1.jpg');
+            }));
+
+        $this->subject->execute($this->observerMock);
+    }
+
+    /**
      * Test that only the first <head> tag is replaced.
      */
     public function testOnlyReplacesFirstHeadTag(): void
