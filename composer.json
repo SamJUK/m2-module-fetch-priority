@@ -3,7 +3,7 @@
     "description": "Adds ability to set fetch priority attributes, preload/prefetch links for admin content. As well as a public API for extension from 3rd party modules",
     "type": "magento2-module",
     "require": {
-        "php": "^7.4|^8.0"
+        "php": "^8.1"
     },
     "license": [
         "MIT"
