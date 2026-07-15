@@ -25,12 +25,17 @@ class BlockToHtmlAfter implements ObserverInterface
 
         /** @var DataObject */
         $transport = $observer->getEvent()->getTransport();
+        $html = $transport->getHtml();
+
+        if (!str_contains($html, 'preload="Yes"')) {
+            return;
+        }
 
         $matches = [];
         // @TODO: Only preload images with the `preload` attribute set
         preg_match_all(
             '/<img.*?src="(.*?)".*?preload="Yes".*?data-element="(.*?)".*?>/',
-            $transport->getHtml(),
+            $html,
             $matches
         );
 
