@@ -47,7 +47,6 @@ class BlockToHtmlAfterTest extends TestCase
 
     public function testDoesNothingWhenBothConfigsDisabled(): void
     {
-        // Note: The condition is: if (!isEnabled && !isPageBuilderPreloadEnabled)
         $this->configMock->method('isEnabled')->willReturn(false);
         $this->configMock->method('isPageBuilderPreloadEnabled')->willReturn(false);
 
@@ -158,34 +157,32 @@ class BlockToHtmlAfterTest extends TestCase
         $this->subject->execute($this->observerMock);
     }
 
-    public function testExecutesWhenOnlyModuleEnabled(): void
+    public function testDoesNothingWhenOnlyModuleEnabled(): void
     {
+        // Master 'Enabled' switch alone is not sufficient - the pagebuilder_content
+        // toggle must also be on, matching every other observer in this module.
         $this->configMock->method('isEnabled')->willReturn(true);
         $this->configMock->method('isPageBuilderPreloadEnabled')->willReturn(false);
 
         $html = '<img src="/media/test.jpg" preload="Yes" data-element="desktop_image">';
         $this->transport->setHtml($html);
 
-        $preloadMock = $this->createMock(Preload::class);
-        $this->preloadFactoryMock->method('create')->willReturn($preloadMock);
-
-        $this->linkStoreMock->expects($this->once())->method('add');
+        $this->linkStoreMock->expects($this->never())->method('add');
 
         $this->subject->execute($this->observerMock);
     }
 
-    public function testExecutesWhenOnlyPageBuilderPreloadEnabled(): void
+    public function testDoesNothingWhenOnlyPageBuilderPreloadEnabled(): void
     {
+        // pagebuilder_content toggle alone is not sufficient if the master
+        // 'Enabled' switch is off - it must act as a full kill-switch.
         $this->configMock->method('isEnabled')->willReturn(false);
         $this->configMock->method('isPageBuilderPreloadEnabled')->willReturn(true);
 
         $html = '<img src="/media/test.jpg" preload="Yes" data-element="desktop_image">';
         $this->transport->setHtml($html);
 
-        $preloadMock = $this->createMock(Preload::class);
-        $this->preloadFactoryMock->method('create')->willReturn($preloadMock);
-
-        $this->linkStoreMock->expects($this->once())->method('add');
+        $this->linkStoreMock->expects($this->never())->method('add');
 
         $this->subject->execute($this->observerMock);
     }

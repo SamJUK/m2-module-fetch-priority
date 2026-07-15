@@ -19,7 +19,7 @@ class BlockToHtmlAfter implements ObserverInterface
      */
     public function execute(Observer $observer)
     {
-        if (!$this->config->isEnabled() && !$this->config->isPageBuilderPreloadEnabled()) {
+        if (!$this->config->isEnabled() || !$this->config->isPageBuilderPreloadEnabled()) {
             return;
         }
 
