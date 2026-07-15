@@ -13,6 +13,9 @@ use Magento\Catalog\Helper\Image as ImageHelper;
 
 class SetCollection
 {
+    /** @var object[] Keyed by spl_object_id() of already-processed collections */
+    private array $processedCollections = [];
+
     public function __construct(
         private readonly \SamJUK\FetchPriority\Model\LinkStore $linkStore,
         private readonly \SamJUK\FetchPriority\Model\Links\PreloadFactory $preloadFactory,
@@ -27,6 +30,16 @@ class SetCollection
     {
         if (!$this->config->isEnabled() || !$this->config->isCategoryProductPreloadEnabled()) {
             return $result;
+        }
+
+        if (is_object($collection)) {
+            $collectionId = spl_object_id($collection);
+            if (isset($this->processedCollections[$collectionId])) {
+                return $result;
+            }
+            // Keep a reference to the collection itself (not just its id) so spl_object_id()
+            // can't be recycled by an unrelated object for the rest of this request.
+            $this->processedCollections[$collectionId] = $collection;
         }
 
         $this->preloadInitialProductImages($collection, $subject->getCurrentMode());

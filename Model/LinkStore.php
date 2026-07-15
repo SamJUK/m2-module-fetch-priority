@@ -15,7 +15,8 @@ class LinkStore
      */
     public function add(\SamJUK\FetchPriority\Api\LinkInterface $link) : static
     {
-        $this->_data[] = $link;
+        $key = md5(serialize($link->getAttrs()));
+        $this->_data[$key] = $link;
         return $this;
     }
 
@@ -24,6 +25,6 @@ class LinkStore
      */
     public function get() : array
     {
-        return $this->_data;
+        return array_values($this->_data);
     }
 }
