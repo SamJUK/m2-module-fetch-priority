@@ -15,7 +15,7 @@ class LinkStore
      */
     public function add(\SamJUK\FetchPriority\Api\LinkInterface $link) : static
     {
-        $key = md5(serialize($link->getAttrs()));
+        $key = hash('sha256', json_encode($link->getAttrs()));
         $this->_data[$key] = $link;
         return $this;
     }
