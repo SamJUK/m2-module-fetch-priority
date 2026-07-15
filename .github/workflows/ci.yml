@@ -28,6 +28,6 @@ jobs:
       fail-fast: false
       matrix:
         magento_version:
-          - '2.4.8-p3'
-          - '2.4.7-p8'
-          - '2.4.6-p13'
+          - "2.4.8-p5"
+          - "2.4.7-p10"
+          - "2.4.6-p15"
