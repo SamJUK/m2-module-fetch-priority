@@ -144,4 +144,53 @@ class SetCollectionTest extends TestCase
 
         $this->subject->afterSetCollection($this->toolbarMock, $this->toolbarMock, $products);
     }
+
+    public function testDoesNotReprocessTheSameCollectionInstanceTwice(): void
+    {
+        // Regression test: Toolbar::setCollection() is called twice per category page render
+        // by core Magento/Luma (same Toolbar, same collection instance) - this plugin must not
+        // preload the same collection's images a second time.
+        $this->configMock->method('isEnabled')->willReturn(true);
+        $this->configMock->method('isCategoryProductPreloadEnabled')->willReturn(true);
+        $this->toolbarMock->method('getCurrentMode')->willReturn('grid');
+
+        $productMock = $this->createMock(Product::class);
+        $productMock->method('getData')->with('small_image')->willReturn('product-image.jpg');
+
+        $imageAssetMock = $this->createMock(ViewAssetImage::class);
+        $imageAssetMock->method('getUrl')->willReturn('https://example.com/media/product-image.jpg');
+        $this->viewAssetImageFactoryMock->method('create')->willReturn($imageAssetMock);
+
+        $preloadMock = $this->createMock(Preload::class);
+        $this->preloadFactoryMock->method('create')->willReturn($preloadMock);
+
+        $this->linkStoreMock->expects($this->once())->method('add');
+
+        $collection = new \ArrayIterator([$productMock]);
+
+        $this->subject->afterSetCollection($this->toolbarMock, $this->toolbarMock, $collection);
+        $this->subject->afterSetCollection($this->toolbarMock, $this->toolbarMock, $collection);
+    }
+
+    public function testProcessesDifferentCollectionInstancesIndependently(): void
+    {
+        $this->configMock->method('isEnabled')->willReturn(true);
+        $this->configMock->method('isCategoryProductPreloadEnabled')->willReturn(true);
+        $this->toolbarMock->method('getCurrentMode')->willReturn('grid');
+
+        $productMock = $this->createMock(Product::class);
+        $productMock->method('getData')->with('small_image')->willReturn('product-image.jpg');
+
+        $imageAssetMock = $this->createMock(ViewAssetImage::class);
+        $imageAssetMock->method('getUrl')->willReturn('https://example.com/media/product-image.jpg');
+        $this->viewAssetImageFactoryMock->method('create')->willReturn($imageAssetMock);
+
+        $preloadMock = $this->createMock(Preload::class);
+        $this->preloadFactoryMock->method('create')->willReturn($preloadMock);
+
+        $this->linkStoreMock->expects($this->exactly(2))->method('add');
+
+        $this->subject->afterSetCollection($this->toolbarMock, $this->toolbarMock, new \ArrayIterator([$productMock]));
+        $this->subject->afterSetCollection($this->toolbarMock, $this->toolbarMock, new \ArrayIterator([$productMock]));
+    }
 }
