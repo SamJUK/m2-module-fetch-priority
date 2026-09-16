@@ -165,7 +165,7 @@ class PreloadTest extends TestCase
     {
         return [
             'high' => [FetchPriority::High, 'high'],
-            'medium' => [FetchPriority::Medium, 'medium'],
+            'auto' => [FetchPriority::Auto, 'auto'],
             'low' => [FetchPriority::Low, 'low'],
         ];
     }
