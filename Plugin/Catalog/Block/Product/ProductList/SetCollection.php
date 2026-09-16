@@ -97,7 +97,6 @@ class SetCollection
     {
         $preload = $this->preloadFactory->create([
             'href' => $imageUrl,
-            'mimeType' => \SamJUK\FetchPriority\Enum\Preload\MimeType::ImageJPEG,
             'asType' => \SamJUK\FetchPriority\Enum\Preload\AsType::Image,
             'fetchPriority' => \SamJUK\FetchPriority\Enum\FetchPriority::High
         ]);

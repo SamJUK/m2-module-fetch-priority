@@ -11,14 +11,14 @@ class Preload implements \SamJUK\FetchPriority\Api\LinkInterface
     public function __construct(
         private readonly string $href,
         private readonly \SamJUK\FetchPriority\Enum\Preload\AsType $asType,
-        private readonly \SamJUK\FetchPriority\Enum\Preload\MimeType $mimeType,
+        private readonly ?\SamJUK\FetchPriority\Enum\Preload\MimeType $mimeType = null,
         private readonly ?\SamJUK\FetchPriority\Enum\FetchPriority $fetchPriority = null,
         private readonly bool $crossOrigin = false,
         private readonly ?string $media = null,
     ) { }
 
     /**
-     * @return array{as: string, href: string, rel: string, type: string|null[]}
+     * @return array<string, string>
      */
     public function getAttrs() : array
     {
@@ -26,8 +26,11 @@ class Preload implements \SamJUK\FetchPriority\Api\LinkInterface
             'rel' => static::REL,
             'href' => $this->href,
             'as' => $this->asType->value,
-            'type' => $this->mimeType->value
         ];
+
+        if ($this->mimeType) {
+            $attrs['type'] = $this->mimeType->value;
+        }
 
         if ($this->fetchPriority) {
             $attrs['fetchpriority'] = $this->fetchPriority->value;

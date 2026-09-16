@@ -44,7 +44,6 @@ class BlockToHtmlAfter implements ObserverInterface
             if ($url) {
                 $preload = $this->preloadFactory->create([
                     'href' => $url,
-                    'mimeType' => \SamJUK\FetchPriority\Enum\Preload\MimeType::ImageJPEG,
                     'asType' => \SamJUK\FetchPriority\Enum\Preload\AsType::Image,
                     'fetchPriority' => \SamJUK\FetchPriority\Enum\FetchPriority::High,
                     'media' => $this->getMediaQuery($matches[2][$i])
