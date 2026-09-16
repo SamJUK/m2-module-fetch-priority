@@ -22,8 +22,8 @@ class ResponseBefore implements ObserverInterface
 
         $response = $observer->getEvent()->getData('response');
         $response->setBody(preg_replace_callback(
-            '/<head.*?>/',
-            fn() => "<head>
+            '/<head(\s[^>]*)?>/i',
+            fn($match) => "{$match[0]}
             <!-- SamJUK_FetchPriority:preload -->
             {$this->getPreloadsHTML()}
             <!-- / SamJUK_FetchPriority::preload -->",
