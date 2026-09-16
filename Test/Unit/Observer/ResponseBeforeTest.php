@@ -185,6 +185,43 @@ class ResponseBeforeTest extends TestCase
         $this->subject->execute($this->observerMock);
     }
 
+    public function testPreservesHeadTagAttributes(): void
+    {
+        $linkMock = $this->createMock(LinkInterface::class);
+        $linkMock->method('getAttrs')->willReturn(['rel' => 'preload', 'href' => '/test.jpg']);
+        $this->appStateMock->method('getAreaCode')->willReturn(Area::AREA_FRONTEND);
+        $this->linkStoreMock->method('get')->willReturn([$linkMock]);
+        $this->secureHtmlRendererMock->method('renderTag')->willReturn('<link rel="preload">');
+        $this->responseMock->method('getBody')
+            ->willReturn('<html><head prefix="og: https://ogp.me/ns#"><title>T</title></head><body></body></html>');
+
+        $this->responseMock->expects($this->once())
+            ->method('setBody')
+            ->with($this->callback(function ($body) {
+                return str_contains($body, '<head prefix="og: https://ogp.me/ns#">')
+                    && substr_count($body, '<head') === 1;
+            }));
+
+        $this->subject->execute($this->observerMock);
+    }
+
+    public function testDoesNotMatchHeaderElement(): void
+    {
+        $linkMock = $this->createMock(LinkInterface::class);
+        $linkMock->method('getAttrs')->willReturn(['rel' => 'preload', 'href' => '/test.jpg']);
+        $this->appStateMock->method('getAreaCode')->willReturn(Area::AREA_FRONTEND);
+        $this->linkStoreMock->method('get')->willReturn([$linkMock]);
+        $this->secureHtmlRendererMock->method('renderTag')->willReturn('<link rel="preload">');
+        $this->responseMock->method('getBody')
+            ->willReturn('<div><header class="page-header">x</header></div>');
+
+        $this->responseMock->expects($this->once())
+            ->method('setBody')
+            ->with('<div><header class="page-header">x</header></div>');
+
+        $this->subject->execute($this->observerMock);
+    }
+
     /**
      * Test that only the first <head> tag is replaced.
      */
