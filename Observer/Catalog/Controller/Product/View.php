@@ -25,7 +25,6 @@ class View implements ObserverInterface
 
         $preload = $this->preloadFactory->create([
             'href' => $this->getMainImage($observer->getData('product')),
-            'mimeType' => \SamJUK\FetchPriority\Enum\Preload\MimeType::ImageJPEG,
             'asType' => \SamJUK\FetchPriority\Enum\Preload\AsType::Image,
             'fetchPriority' => \SamJUK\FetchPriority\Enum\FetchPriority::High
         ]);

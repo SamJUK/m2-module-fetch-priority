@@ -43,6 +43,13 @@ class PreloadTest extends TestCase
         $this->assertArrayNotHasKey('media', $attrs);
     }
 
+    public function testGetAttrsOmitsTypeWhenMimeTypeNotSet(): void
+    {
+        $attrs = (new Preload('/media/test.webp', AsType::Image))->getAttrs();
+
+        $this->assertSame(['rel' => 'preload', 'href' => '/media/test.webp', 'as' => 'image'], $attrs);
+    }
+
     public function testGetAttrsIncludesFetchPriorityWhenSet(): void
     {
         $preload = new Preload(
