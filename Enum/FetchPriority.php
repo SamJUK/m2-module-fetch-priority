@@ -6,7 +6,7 @@ namespace SamJUK\FetchPriority\Enum;
 
 enum FetchPriority : string
 {
+    case Auto = 'auto';
     case Low = 'low';
-    case Medium = 'medium';
     case High = 'high';
 }

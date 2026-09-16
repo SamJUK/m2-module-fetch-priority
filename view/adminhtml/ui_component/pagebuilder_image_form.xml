@@ -49,10 +49,6 @@
                                 <item name="label" xsi:type="string" translate="true">Low</item>
                             </option>
                             <option name="2" xsi:type="array">
-                                <item name="value" xsi:type="string">medium</item>
-                                <item name="label" xsi:type="string" translate="true">Medium</item>
-                            </option>
-                            <option name="3" xsi:type="array">
                                 <item name="value" xsi:type="string">high</item>
                                 <item name="label" xsi:type="string" translate="true">High</item>
                             </option>
