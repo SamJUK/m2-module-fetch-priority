@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace SamJUK\FetchPriority\Model;
 
 use Magento\Framework\App\Config\ScopeConfigInterface;
+use Magento\Store\Model\ScopeInterface;
 
 class Config
 {
@@ -37,12 +38,12 @@ class Config
         return $this->getFlag(self::XML_PATH_PRELOAD_PAGEBUILDER_CONTENT);
     }
 
-    private function getFlag($path, $scope = 'default', $scopeCode = null)
+    private function getFlag($path, $scope = ScopeInterface::SCOPE_STORE, $scopeCode = null)
     {
         return (bool)$this->scopeConfig->isSetFlag($path, $scope, $scopeCode);
     }
 
-    private function getValue($path, $scope = 'default', $scopeCode = null)
+    private function getValue($path, $scope = ScopeInterface::SCOPE_STORE, $scopeCode = null)
     {
         return $this->scopeConfig->getValue($path, $scope, $scopeCode);
     }
