@@ -13,7 +13,8 @@ class Prefetch implements \SamJUK\FetchPriority\Api\LinkInterface
      */
     public function __construct(
         private readonly string $href
-    ) { }
+    ) {
+    }
 
     /**
      * @return array{href: string, rel: string}

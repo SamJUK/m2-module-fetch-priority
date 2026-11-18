@@ -15,7 +15,8 @@ class Preload implements \SamJUK\FetchPriority\Api\LinkInterface
         private readonly ?\SamJUK\FetchPriority\Enum\FetchPriority $fetchPriority = null,
         private readonly bool $crossOrigin = false,
         private readonly ?string $media = null,
-    ) { }
+    ) {
+    }
 
     /**
      * @return array<string, string>

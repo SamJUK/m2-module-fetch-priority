@@ -10,16 +10,13 @@ This module is intended to run inside an existing Magento 2 install, at
 Run these from the module directory before opening a PR:
 
 ```sh
-make test-phpcs        # Magento2 coding standard
-make test-phpstan      # Static analysis
-make test-unit         # PHPUnit unit tests
-make test-composer     # composer.json validation
+composer install
+vendor/bin/lefthook install            # Conventional Commits, PHPCS and PHPStan on every commit
+vendor/bin/samjuk-dev-standards check  # PHPCS and PHPStan over the whole module
+vendor/bin/phpunit Test/Unit           # unit tests; the SetCollection ones need Magento's generated factories, so run in CI
 ```
 
-`make local-tests` runs the local test suite (`_local_test.sh`).
-
-CI runs lint, static analysis, and unit tests against Magento 2.4.6, 2.4.7
-and 2.4.8 on every push/PR to `master`.
+CI runs lint, PHPCS, PHPStan, a declared-dependency check (ExtensionChecker), then unit tests, DI compile and integration tests on every supported Magento and Mage-OS version, on every push and PR to `master`.
 
 ## Pull Requests
 
@@ -28,7 +25,7 @@ and 2.4.8 on every push/PR to `master`.
 - Use [Conventional Commits](https://www.conventionalcommits.org/) for commit
   messages (`feat:`, `fix:`, `chore:`, etc.) — this keeps history and
   releases readable.
-- Make sure `make test-phpcs`, `make test-phpstan` and `make test-unit` pass
+- Make sure `vendor/bin/samjuk-dev-standards check` and the unit tests pass
   before requesting review.
 
 ## Reporting Bugs
