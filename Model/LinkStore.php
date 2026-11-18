@@ -11,7 +11,7 @@ class LinkStore
 
     /**
      * @param \SamJUK\FetchPriority\Api\LinkInterface $link
-     * @return statics
+     * @return static
      */
     public function add(\SamJUK\FetchPriority\Api\LinkInterface $link) : static
     {
