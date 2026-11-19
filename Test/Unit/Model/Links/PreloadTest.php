@@ -123,6 +123,7 @@ class PreloadTest extends TestCase
     /**
      * @dataProvider asTypeProvider
      */
+    #[\PHPUnit\Framework\Attributes\DataProvider('asTypeProvider')]
     public function testDifferentAsTypes(AsType $asType, string $expectedValue): void
     {
         $preload = new Preload(
@@ -149,6 +150,7 @@ class PreloadTest extends TestCase
     /**
      * @dataProvider fetchPriorityProvider
      */
+    #[\PHPUnit\Framework\Attributes\DataProvider('fetchPriorityProvider')]
     public function testDifferentFetchPriorities(FetchPriority $priority, string $expectedValue): void
     {
         $preload = new Preload(

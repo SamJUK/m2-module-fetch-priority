@@ -3,7 +3,14 @@
     "description": "Adds ability to set fetch priority attributes, preload/prefetch links for admin content. As well as a public API for extension from 3rd party modules",
     "type": "magento2-module",
     "require": {
-        "php": "^8.1"
+        "php": "^8.1",
+        "magento/framework": "^103.0",
+        "magento/module-catalog": "^104.0",
+        "magento/module-store": "^101.1",
+        "ext-json": "*",
+        "ext-pcre": "*",
+        "magento/module-backend": "^102.0",
+        "magento/module-config": "^101.2"
     },
     "license": [
         "MIT"
@@ -18,7 +25,11 @@
     },
     "require-dev": {
         "phpunit/phpunit": "^10.5",
-        "phpstan/phpstan": "^1.12"
+        "samjuk/dev-standards": "^1.0",
+        "magento/magento-coding-standard": "^41.0",
+        "bitexpert/phpstan-magento": "^0.44.0",
+        "phpstan/extension-installer": "^1.4",
+        "phpstan/phpstan": "^2.3"
     },
     "homepage": "https://github.com/SamJUK/m2-module-fetch-priority",
     "authors": [
@@ -42,5 +53,18 @@
         "fetchpriority",
         "lcp",
         "open-source"
-    ]
+    ],
+    "repositories": [{
+        "name": "mage-os",
+        "type": "composer",
+        "url": "https://mirror.mage-os.org/"
+    }],
+    "config": {
+        "allow-plugins": {
+            "dealerdirect/phpcodesniffer-composer-installer": true,
+            "magento/composer-dependency-version-audit-plugin": false,
+            "magento/magento-composer-installer": false,
+            "phpstan/extension-installer": true
+        }
+    }
 }

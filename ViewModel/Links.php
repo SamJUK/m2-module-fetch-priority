@@ -8,7 +8,8 @@ class Links implements \Magento\Framework\View\Element\Block\ArgumentInterface
 {
     public function __construct(
         private readonly \SamJUK\FetchPriority\Model\LinkStore $linkStore
-    ) { }
+    ) {
+    }
 
     /**
      * @return \SamJUK\FetchPriority\Api\LinkInterface[]

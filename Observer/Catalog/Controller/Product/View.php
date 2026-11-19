@@ -15,7 +15,8 @@ class View implements ObserverInterface
         private readonly \Magento\Catalog\Block\Product\View\Gallery $galleryBlock,
         private readonly \SamJUK\FetchPriority\Model\Config $config,
         private readonly \Magento\Catalog\Helper\Image $imageHelper
-    ) { }
+    ) {
+    }
 
     public function execute(Observer $observer)
     {

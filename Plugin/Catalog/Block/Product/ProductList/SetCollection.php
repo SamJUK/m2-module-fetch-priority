@@ -24,7 +24,8 @@ class SetCollection
         private readonly PlaceholderFactory $viewAssetPlaceholderFactory,
         private readonly AssetImageFactory $viewAssetImageFactory,
         private readonly \SamJUK\FetchPriority\Model\Config $config
-    ) { }
+    ) {
+    }
 
     public function afterSetCollection(Toolbar $subject, $result, $collection)
     {

@@ -12,7 +12,8 @@ class BlockToHtmlAfter implements ObserverInterface
         private readonly \SamJUK\FetchPriority\Model\LinkStore $linkStore,
         private readonly \SamJUK\FetchPriority\Model\Links\PreloadFactory $preloadFactory,
         private readonly \SamJUK\FetchPriority\Model\Config $config
-    ) { }
+    ) {
+    }
 
     /**
      * {@inheritdoc}

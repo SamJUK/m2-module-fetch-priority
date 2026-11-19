@@ -12,7 +12,8 @@ class ResponseBefore implements ObserverInterface
         private readonly \SamJUK\FetchPriority\Model\LinkStore $linkStore,
         private readonly \Magento\Framework\View\Helper\SecureHtmlRenderer $secureHtmlRenderer,
         private readonly \Magento\Framework\App\State $appState,
-    ) { }
+    ) {
+    }
 
     public function execute(\Magento\Framework\Event\Observer $observer)
     {

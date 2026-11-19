@@ -14,6 +14,7 @@ class ConfigTest extends TestCase
     /**
      * @dataProvider flagProvider
      */
+    #[\PHPUnit\Framework\Attributes\DataProvider('flagProvider')]
     public function testFlagsAreReadAtStoreScope(string $method, string $path): void
     {
         $scopeConfig = $this->createMock(ScopeConfigInterface::class);
