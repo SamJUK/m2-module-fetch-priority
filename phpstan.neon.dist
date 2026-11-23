@@ -11,5 +11,3 @@ parameters:
         - Test
         - ViewModel
         - registration.php
-    # ponytail: level 1 keeps parity with the old config; dev-standards default is 6.
-    level: 1

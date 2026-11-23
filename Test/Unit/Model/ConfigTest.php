@@ -26,6 +26,9 @@ class ConfigTest extends TestCase
         $this->assertTrue((new Config($scopeConfig))->$method());
     }
 
+    /**
+     * @return list<array{string, string}>
+     */
     public static function flagProvider(): array
     {
         return [

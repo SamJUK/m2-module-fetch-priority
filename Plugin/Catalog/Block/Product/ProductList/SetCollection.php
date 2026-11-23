@@ -27,7 +27,7 @@ class SetCollection
     ) {
     }
 
-    public function afterSetCollection(Toolbar $subject, $result, $collection)
+    public function afterSetCollection(Toolbar $subject, mixed $result, mixed $collection): mixed
     {
         if (!$this->config->isEnabled() || !$this->config->isCategoryProductPreloadEnabled()) {
             return $result;
@@ -47,6 +47,9 @@ class SetCollection
         return $result;
     }
 
+    /**
+     * @param iterable<\Magento\Catalog\Model\Product> $collection
+     */
     private function preloadInitialProductImages($collection, string $mode): void
     {
         $i = 0;
@@ -60,7 +63,10 @@ class SetCollection
         }
     }
 
-    private function getProductImage($product, $imageType)
+    /**
+     * @param \Magento\Catalog\Model\Product $product
+     */
+    private function getProductImage($product, string $imageType): string
     {
         $viewImageConfig = $this->presentationConfig->getViewConfig()->getMediaAttributes(
             'Magento_Catalog',
@@ -89,12 +95,12 @@ class SetCollection
         return $imageAsset->getUrl();
     }
 
-    private function getImageType(string $mode)
+    private function getImageType(string $mode): string
     {
         return $mode === 'grid' ? 'category_page_grid' : 'category_page_list';
     }
 
-    private function preload(string $imageUrl)
+    private function preload(string $imageUrl): void
     {
         $preload = $this->preloadFactory->create([
             'href' => $imageUrl,

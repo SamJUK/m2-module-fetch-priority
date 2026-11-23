@@ -135,6 +135,9 @@ class PreloadTest extends TestCase
         $this->assertSame($expectedValue, $preload->getAttrs()['as']);
     }
 
+    /**
+     * @return array<string, array{AsType, string}>
+     */
     public static function asTypeProvider(): array
     {
         return [
@@ -163,6 +166,9 @@ class PreloadTest extends TestCase
         $this->assertSame($expectedValue, $preload->getAttrs()['fetchpriority']);
     }
 
+    /**
+     * @return array<string, array{FetchPriority, string}>
+     */
     public static function fetchPriorityProvider(): array
     {
         return [

@@ -32,6 +32,10 @@ class View implements ObserverInterface
         $this->linkStore->add($preload);
     }
 
+    /**
+     * @param \Magento\Catalog\Model\Product $product
+     * @return string
+     */
     private function getMainImage($product)
     {
         $images = $this->galleryBlock->getGalleryImages()->getItems();
