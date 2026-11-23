@@ -19,32 +19,38 @@ class Config
     ) {
     }
 
-    public function isEnabled()
+    public function isEnabled(): bool
     {
         return $this->getFlag(self::XML_PATH_ENABLED);
     }
 
-    public function isProductMainPreloadEnabled()
+    public function isProductMainPreloadEnabled(): bool
     {
         return $this->getFlag(self::XML_PATH_PRELOAD_PRODUCT_MAIN);
     }
 
-    public function isCategoryProductPreloadEnabled()
+    public function isCategoryProductPreloadEnabled(): bool
     {
         return $this->getFlag(self::XML_PATH_PRELOAD_CATEGORY_PRODUCTS);
     }
 
-    public function isPageBuilderPreloadEnabled()
+    public function isPageBuilderPreloadEnabled(): bool
     {
         return $this->getFlag(self::XML_PATH_PRELOAD_PAGEBUILDER_CONTENT);
     }
 
-    private function getFlag($path, $scope = ScopeInterface::SCOPE_STORE, $scopeCode = null)
+    /**
+     * @param null|int|string $scopeCode
+     */
+    private function getFlag(string $path, string $scope = ScopeInterface::SCOPE_STORE, $scopeCode = null): bool
     {
         return (bool)$this->scopeConfig->isSetFlag($path, $scope, $scopeCode);
     }
 
-    private function getValue($path, $scope = ScopeInterface::SCOPE_STORE, $scopeCode = null)
+    /**
+     * @param null|int|string $scopeCode
+     */
+    private function getValue(string $path, string $scope = ScopeInterface::SCOPE_STORE, $scopeCode = null): mixed
     {
         return $this->scopeConfig->getValue($path, $scope, $scopeCode);
     }

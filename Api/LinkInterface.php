@@ -6,5 +6,8 @@ namespace SamJUK\FetchPriority\Api;
 
 interface LinkInterface
 {
+    /**
+     * @return array<string, string>
+     */
     public function getAttrs();
 }

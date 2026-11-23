@@ -33,7 +33,7 @@ class ResponseBefore implements ObserverInterface
         ));
     }
 
-    private function getPreloadsHTML()
+    private function getPreloadsHTML(): string
     {
         $preloads = array_map(
             fn($link) => $this->secureHtmlRenderer->renderTag('link', $link->getAttrs()),

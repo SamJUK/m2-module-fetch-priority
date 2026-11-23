@@ -55,7 +55,7 @@ class BlockToHtmlAfter implements ObserverInterface
         }
     }
 
-    private function getMediaQuery($type)
+    private function getMediaQuery(string $type): string
     {
         if ($type === 'desktop_image') {
             return '(min-width: 769px)';
