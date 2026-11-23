@@ -1,6 +1,6 @@
 # SamJUK_FetchPriority
 
-[![Supported Magento Versions](https://img.shields.io/badge/magento-2.4.6%E2%80%932.4.8-orange.svg?logo=magento)](https://github.com/SamJUK/m2-module-fetch-priority/actions/workflows/ci.yml)
+[![Supported Magento Versions](https://img.shields.io/badge/magento-2.4.6%E2%80%932.4.9-orange.svg?logo=magento)](https://github.com/SamJUK/m2-module-fetch-priority/actions/workflows/ci.yml)
 [![CI Workflow Status](https://github.com/samjuk/m2-module-fetch-priority/actions/workflows/ci.yml/badge.svg)](https://github.com/SamJUK/m2-module-fetch-priority/actions/workflows/ci.yml)
 [![GitHub Release](https://img.shields.io/github/v/release/SamJUK/m2-module-fetch-priority?label=Latest%20Release&logo=github)](https://github.com/SamJUK/m2-module-fetch-priority/releases)
 
@@ -18,8 +18,8 @@ It also provides a simple API to add preload & prefetch link tags to the header 
 
 ## Requirements
 
-- Magento 2.4.6 - 2.4.8 (see CI matrix badge above)
-- PHP 8.1+
+- Magento 2.4.6 - 2.4.9 (see CI matrix badge above)
+- PHP 8.2+
 
 ## Installation
 ```sh
